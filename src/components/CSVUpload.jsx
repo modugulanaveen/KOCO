@@ -667,25 +667,18 @@ export default function CSVUpload({ employees = [], setEmployees, company }) {
         if (!emp._validation.gross.isValid && emp._validation.gross.provided > 0) {
           warnings.push(`Row ${idx + 1}: Gross mismatch (Provided: ${emp._validation.gross.provided}, Calculated: ${emp._validation.gross.calculated})`);
         }
-            if (!emp._validation.deductions.isValid && emp._validation.deductions.provided > 0) {
-              warnings.push(`Row ${idx + 1}: Deductions mismatch (Provided: ${emp._validation.deductions.provided}, Calculated: ${emp._validation.deductions.calculated})`);
-            }
-          }
-        });
-        
-        if (warnings.length > 0) {
-          setValidationWarnings(warnings);
+        if (!emp._validation.deductions.isValid && emp._validation.deductions.provided > 0) {
+          warnings.push(`Row ${idx + 1}: Deductions mismatch (Provided: ${emp._validation.deductions.provided}, Calculated: ${emp._validation.deductions.calculated})`);
         }
-
-        // Show success message
-        setSuccess(`Found ${cleanData.length} valid employee records after cleaning. Ready to import.`);
-        
-      },
-      error: (err) => {
-        setProcessing(false);
-        setError(`CSV parse error: ${err.message}`);
       }
     });
+    
+    if (warnings.length > 0) {
+      setValidationWarnings(warnings);
+    }
+
+    // Show success message
+    setSuccess(`Found ${cleanData.length} valid employee records after cleaning. Ready to import.`);
   };
 
   const downloadTemplate = () => {
